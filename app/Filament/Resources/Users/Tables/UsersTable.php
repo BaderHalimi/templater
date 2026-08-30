@@ -16,7 +16,7 @@ class UsersTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->query(fn (Builder $query): Builder => $query->withCount(['invitationSends', 'invitationProjects']))
+            ->modifyQueryUsing(fn (Builder $query): Builder => $query->withCount(['invitationSends', 'invitationProjects']))
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\InvitationSendFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
@@ -19,6 +21,9 @@ use Illuminate\Support\Carbon;
 #[Fillable(['user_id', 'invitation_project_id', 'recipient_email', 'sent_at'])]
 class InvitationSend extends Model
 {
+    /** @use HasFactory<InvitationSendFactory> */
+    use HasFactory;
+
     /**
      * @return BelongsTo<User, $this>
      */
