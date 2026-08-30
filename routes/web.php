@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleAuthenticatedSessionController;
 use App\Livewire\Auth\LoginPage;
-use App\Livewire\Auth\RegisterPage;
 use App\Livewire\HomePage;
 use App\Livewire\Projects\ProjectForm;
 use App\Livewire\Projects\ProjectIndex;
@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Route;
 Route::livewire('/', HomePage::class)->name('home');
 
 Route::middleware('guest')->group(function (): void {
-    Route::livewire('/register', RegisterPage::class)->name('register');
     Route::livewire('/login', LoginPage::class)->name('login');
+    Route::redirect('/register', '/login')->name('register');
+    Route::get('/auth/google/redirect', [GoogleAuthenticatedSessionController::class, 'redirect'])->name('auth.google.redirect');
+    Route::get('/auth/google/callback', [GoogleAuthenticatedSessionController::class, 'callback'])->name('auth.google.callback');
 });
 
 Route::middleware('auth')->group(function (): void {

@@ -15,11 +15,8 @@
                         class="rounded-md border border-zinc-300 px-5 py-3 font-bold text-zinc-800 hover:bg-white">عرض
                         المشاريع</a>
                 @else
-                    <a href="{{ route('register') }}" wire:navigate
-                        class="rounded-md bg-teal-700 px-5 py-3 font-bold text-white hover:bg-teal-800">ابدأ الآن</a>
                     <a href="{{ route('login') }}" wire:navigate
-                        class="rounded-md border border-zinc-300 px-5 py-3 font-bold text-zinc-800 hover:bg-white">لدي
-                        حساب</a>
+                        class="rounded-md bg-teal-700 px-5 py-3 font-bold text-white hover:bg-teal-800">الدخول بحساب الكلية</a>
                 @endauth
             </div>
         </div>

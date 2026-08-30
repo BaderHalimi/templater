@@ -1,6 +1,5 @@
 <?php
 
-use App\Livewire\Auth\RegisterPage;
 use App\Livewire\Projects\ProjectForm;
 use App\Livewire\Projects\ProjectShow;
 use App\Mail\ProjectInvitationMail;
@@ -11,19 +10,8 @@ use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
 
-it('registers a user and opens the projects area', function (): void {
-    Livewire::test(RegisterPage::class)
-        ->set('name', 'Demo User')
-        ->set('email', 'demo@example.com')
-        ->set('password', 'password')
-        ->set('passwordConfirmation', 'password')
-        ->call('register')
-        ->assertRedirect(route('projects.index'));
-
-    $this->assertAuthenticated();
-    $this->assertDatabaseHas('users', [
-        'email' => 'demo@example.com',
-    ]);
+it('redirects manual registration to the university Google login', function (): void {
+    $this->get(route('register'))->assertRedirect(route('login'));
 });
 
 it('creates an invitation project for the authenticated user', function (): void {

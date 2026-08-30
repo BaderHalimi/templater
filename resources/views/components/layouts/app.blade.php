@@ -31,8 +31,7 @@
                             <a href="{{ route('projects.index') }}" wire:navigate class="rounded-md px-3 py-2 font-medium text-zinc-700 hover:bg-zinc-100">مشاريعي</a>
                             <livewire:auth.logout-button />
                         @else
-                            <a href="{{ route('login') }}" wire:navigate class="rounded-md px-3 py-2 font-medium text-zinc-700 hover:bg-zinc-100">دخول</a>
-                            <a href="{{ route('register') }}" wire:navigate class="rounded-md bg-zinc-950 px-3 py-2 font-medium text-white hover:bg-zinc-800">تسجيل</a>
+                            <a href="{{ route('login') }}" wire:navigate class="rounded-md bg-zinc-950 px-3 py-2 font-medium text-white hover:bg-zinc-800">الدخول بحساب الكلية</a>
                         @endauth
                     </div>
                 </nav>
