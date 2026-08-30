@@ -1,27 +1,23 @@
 <?php
 
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\InvitationProjectController;
-use App\Http\Controllers\ProjectInvitationMailController;
+use App\Livewire\Auth\LoginPage;
+use App\Livewire\Auth\RegisterPage;
+use App\Livewire\HomePage;
+use App\Livewire\Projects\ProjectForm;
+use App\Livewire\Projects\ProjectIndex;
+use App\Livewire\Projects\ProjectShow;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
+Route::livewire('/', HomePage::class)->name('home');
 
 Route::middleware('guest')->group(function (): void {
-    Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('/register', [RegisteredUserController::class, 'store']);
-
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+    Route::livewire('/register', RegisterPage::class)->name('register');
+    Route::livewire('/login', LoginPage::class)->name('login');
 });
 
 Route::middleware('auth')->group(function (): void {
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
-    Route::resource('projects', InvitationProjectController::class)
-        ->except(['destroy']);
-
-    Route::post('/projects/{project}/send', [ProjectInvitationMailController::class, 'store'])
-        ->name('projects.invitations.send');
+    Route::livewire('/projects', ProjectIndex::class)->name('projects.index');
+    Route::livewire('/projects/create', ProjectForm::class)->name('projects.create');
+    Route::livewire('/projects/{project}/edit', ProjectForm::class)->name('projects.edit');
+    Route::livewire('/projects/{project}', ProjectShow::class)->name('projects.show');
 });

@@ -7,28 +7,32 @@
 
         <title>{{ $title ?? config('app.name', 'Templater') }}</title>
 
-        <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="icon" href="{{asset('logo/ucas_eng_club_web.png')}}" sizes="any">
+        <link rel="icon" href="{{asset('logo/ucas_eng_club_web.png')}}" type="image/png">
 
         @fonts
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body class="min-h-screen bg-stone-50 text-zinc-950 antialiased">
         <div class="min-h-screen">
             <header class="border-b border-zinc-200 bg-white/90 backdrop-blur">
                 <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
-                    <a href="{{ route('home') }}" class="text-lg font-bold text-zinc-950">Templater</a>
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 text-zinc-950" aria-label="النادي الهندسي - مساحة للإبداع والتميز">
+                        <img src="{{ asset('logo/ucas_eng_club_web.png') }}" alt="شعار نادي UCAS الهندسي" class="h-11 w-9 object-contain">
+                        <span class="flex flex-col leading-tight">
+                            <span class="text-base font-extrabold">النــــادي الهنــــدسي</span>
+                            <span class="mt-1 text-xs font-medium text-teal-700">مساحة للإبداع والتميز</span>
+                        </span>
+                    </a>
 
                     <div class="flex items-center gap-2 text-sm">
                         @auth
-                            <a href="{{ route('projects.index') }}" class="rounded-md px-3 py-2 font-medium text-zinc-700 hover:bg-zinc-100">مشاريعي</a>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button class="rounded-md bg-zinc-950 px-3 py-2 font-medium text-white hover:bg-zinc-800">خروج</button>
-                            </form>
+                            <a href="{{ route('projects.index') }}" wire:navigate class="rounded-md px-3 py-2 font-medium text-zinc-700 hover:bg-zinc-100">مشاريعي</a>
+                            <livewire:auth.logout-button />
                         @else
-                            <a href="{{ route('login') }}" class="rounded-md px-3 py-2 font-medium text-zinc-700 hover:bg-zinc-100">دخول</a>
-                            <a href="{{ route('register') }}" class="rounded-md bg-zinc-950 px-3 py-2 font-medium text-white hover:bg-zinc-800">تسجيل</a>
+                            <a href="{{ route('login') }}" wire:navigate class="rounded-md px-3 py-2 font-medium text-zinc-700 hover:bg-zinc-100">دخول</a>
+                            <a href="{{ route('register') }}" wire:navigate class="rounded-md bg-zinc-950 px-3 py-2 font-medium text-white hover:bg-zinc-800">تسجيل</a>
                         @endauth
                     </div>
                 </nav>
@@ -44,5 +48,7 @@
                 {{ $slot }}
             </main>
         </div>
+
+        @livewireScripts
     </body>
 </html>

@@ -33,6 +33,7 @@ class InvitationProjectController extends Controller
             'discussion_at',
             'discussion_place',
             'notes',
+            'text_template',
         ]);
 
         $project = $request->user()->invitationProjects()->create([
@@ -69,6 +70,7 @@ class InvitationProjectController extends Controller
             'discussion_at',
             'discussion_place',
             'notes',
+            'text_template',
         ]);
 
         $project->update([

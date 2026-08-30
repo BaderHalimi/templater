@@ -1,21 +1,25 @@
 <?php
 
+use App\Livewire\Auth\RegisterPage;
+use App\Livewire\Projects\ProjectForm;
+use App\Livewire\Projects\ProjectShow;
 use App\Mail\ProjectInvitationMail;
 use App\Models\InvitationProject;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Livewire\Livewire;
 
 use function Pest\Laravel\actingAs;
 
 it('registers a user and opens the projects area', function (): void {
-    $response = $this->post(route('register'), [
-        'name' => 'Demo User',
-        'email' => 'demo@example.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
-    ]);
+    Livewire::test(RegisterPage::class)
+        ->set('name', 'Demo User')
+        ->set('email', 'demo@example.com')
+        ->set('password', 'password')
+        ->set('passwordConfirmation', 'password')
+        ->call('register')
+        ->assertRedirect(route('projects.index'));
 
-    $response->assertRedirect(route('projects.index'));
     $this->assertAuthenticated();
     $this->assertDatabaseHas('users', [
         'email' => 'demo@example.com',
@@ -25,23 +29,26 @@ it('registers a user and opens the projects area', function (): void {
 it('creates an invitation project for the authenticated user', function (): void {
     $user = User::factory()->create();
 
-    $response = actingAs($user)->post(route('projects.store'), [
-        'title' => 'AI-Based Classification of Web Server Logs',
-        'team_members' => "ديما مغاري\nفرح مدوخ\nملك البنا",
-        'supervisor' => 'م. محمد زاهر الشوربجي',
-        'discussion_at' => '2026-08-30T12:00',
-        'discussion_place' => 'الكلية الجامعية - خانيونس',
-    ]);
+    $component = Livewire::actingAs($user)
+        ->test(ProjectForm::class)
+        ->set('title', 'AI-Based Classification of Web Server Logs')
+        ->set('teamMembers', "ديما مغاري\nفرح مدوخ\nملك البنا")
+        ->set('supervisor', 'م. محمد زاهر الشوربجي')
+        ->set('discussionAt', '2026-08-30T12:00')
+        ->set('discussionPlace', 'الكلية الجامعية - خانيونس')
+        ->set('textTemplate', 'warm')
+        ->call('save');
 
     $project = InvitationProject::query()->firstOrFail();
 
-    $response->assertRedirect(route('projects.show', $project));
+    $component->assertRedirect(route('projects.show', $project));
     $this->assertDatabaseHas('invitation_projects', [
         'id' => $project->id,
         'user_id' => $user->id,
         'title' => 'AI-Based Classification of Web Server Logs',
     ]);
     expect($project->team_members)->toBe(['ديما مغاري', 'فرح مدوخ', 'ملك البنا']);
+    expect($project->text_template->value)->toBe('warm');
 });
 
 it('hides another users invitation project', function (): void {
@@ -59,11 +66,12 @@ it('sends the invitation email to unique recipients immediately', function (): v
     $user = User::factory()->create();
     $project = InvitationProject::factory()->for($user)->create();
 
-    $response = actingAs($user)->post(route('projects.invitations.send', $project), [
-        'emails' => "guest@example.com\nteacher@example.com\nguest@example.com",
-    ]);
+    Livewire::actingAs($user)
+        ->test(ProjectShow::class, ['project' => $project])
+        ->set('emails', "guest@example.com\nteacher@example.com\nguest@example.com")
+        ->call('send')
+        ->assertHasNoErrors();
 
-    $response->assertRedirect();
     Mail::assertSent(ProjectInvitationMail::class, 2);
     Mail::assertSent(ProjectInvitationMail::class, function (ProjectInvitationMail $mail): bool {
         return $mail->hasTo('guest@example.com');
@@ -78,12 +86,12 @@ it('rejects invalid invitation recipients without sending mail', function (): vo
     $user = User::factory()->create();
     $project = InvitationProject::factory()->for($user)->create();
 
-    $response = actingAs($user)->from(route('projects.show', $project))->post(route('projects.invitations.send', $project), [
-        'emails' => 'not-an-email',
-    ]);
+    Livewire::actingAs($user)
+        ->test(ProjectShow::class, ['project' => $project])
+        ->set('emails', 'not-an-email')
+        ->call('send')
+        ->assertHasErrors(['emails']);
 
-    $response->assertRedirect(route('projects.show', $project));
-    $response->assertSessionHasErrors('emails');
     Mail::assertNothingSent();
 });
 
@@ -91,6 +99,8 @@ it('renders the project details inside the html invitation mail', function (): v
     $project = InvitationProject::factory()->create([
         'title' => 'AI-Based Classification of Web Server Logs',
         'discussion_place' => 'قاعة المؤتمرات',
+        'text_template' => 'academic',
+        'team_members' => ['أمل خالد', 'سليم ناصر'],
     ]);
 
     $html = (new ProjectInvitationMail($project))->render();
@@ -98,5 +108,14 @@ it('renders the project details inside the html invitation mail', function (): v
     expect($html)
         ->toContain('AI-Based Classification of Web Server Logs')
         ->toContain('قاعة المؤتمرات')
-        ->toContain('دعوة لحضور مناقشة مشروع تخرج');
+        ->toContain('أمل خالد')
+        ->toContain('سليم ناصر')
+        ->toContain('أعضاء الفريق')
+        ->toContain('GRADUATION PROJECT DEFENSE')
+        ->toContain(asset('logo/ucas_eng_club_web.png'))
+        ->toContain('دعوة لحضور')
+        ->toContain('مناقشة مشروع تخرج')
+        ->toContain('href="'.config('app.url').'"')
+        ->toContain((string) config('app.name'))
+        ->toContain('ندعوكم إلى جلسة علمية نستعرض فيها منهجية المشروع ونتائجه ومساراته التطبيقية بعنوان:');
 });

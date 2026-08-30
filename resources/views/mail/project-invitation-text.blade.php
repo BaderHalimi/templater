@@ -1,13 +1,16 @@
-السلام عليكم ورحمة الله وبركاته،
+@php
+    $textTemplate = $project->invitationTextTemplate();
+@endphp
+{{ $textTemplate->greeting() }}
 
-تحية طيبة وبعد،
-
-يسرّنا ويسعدنا دعوتكم لمشاركتنا لحظة حصاد سنوات الدراسة والجهد، وحضور مناقشة مشروع تخرجنا بعنوان:
+{{ $textTemplate->intro() }}
 
 {{ $project->title }}
 
-فريق العمل:
-{{ implode('، ', $project->team_members) }}
+أعضاء الفريق:
+@foreach ($project->team_members as $member)
+- {{ $member }}
+@endforeach
 
 @if ($project->supervisor)
 تحت إشراف:
@@ -23,7 +26,7 @@
 {{ $project->notes }}
 
 @endif
-يسعدنا حضوركم وتشريفكم لنا في هذه المناسبة المميزة، فحضوركم يكتمل به فرحنا ويسعدنا جداً.
+{{ $textTemplate->closing() }}
 
-دمتم بخير وود،
+{{ $textTemplate->signOff() }}
 فريق المشروع

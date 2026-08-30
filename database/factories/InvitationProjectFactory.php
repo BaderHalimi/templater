@@ -26,6 +26,7 @@ class InvitationProjectFactory extends Factory
             'discussion_at' => now()->addWeek()->setTime(12, 0),
             'discussion_place' => 'الكلية الجامعية - خانيونس، قاعة المؤتمرات',
             'notes' => null,
+            'text_template' => 'formal',
         ];
     }
 }

@@ -7,7 +7,7 @@
                     اصنع دعوة بريدية أنيقة، عاينها، وأرسلها فوراً.
                 </h1>
                 <p class="max-w-xl text-lg leading-8 text-zinc-700">
-                    النظام يحول بيانات مشروعك وموعد المناقشة إلى قالب دعوة عربي بتصميم مغلف متحرك للمعاينة، وقالب HTML مناسب للإرسال عبر البريد.
+                    النظام يحول بيانات مشروعك وموعد المناقشة إلى دعوة عربية عصرية للمعاينة، وقالب HTML مناسب للإرسال عبر البريد.
                 </p>
             </div>
             <div class="flex flex-wrap gap-3">
@@ -22,16 +22,31 @@
         </div>
 
         <div class="invite-stage min-h-[520px] rounded-md border border-zinc-200 bg-white p-6 shadow-sm">
-            <div class="floating-envelope" aria-hidden="true">
-                <div class="envelope-back"></div>
-                <div class="envelope-card">
-                    <span>دعوة مناقشة</span>
-                    <strong>AI-Based Classification</strong>
-                    <small>الأحد، 30 أغسطس 2026</small>
+            <section class="invitation-ticket welcome-ticket" aria-label="مثال على دعوة مناقشة مشروع">
+                <div class="ticket-main">
+                    <p class="ticket-kicker">Graduation Project Defense</p>
+                    <div class="ticket-heading">
+                        <span>دعوة لحضور</span>
+                        <strong>مناقشة مشروع تخرج</strong>
+                    </div>
+                    <div class="ticket-facts">
+                        <div>
+                            <span>الساعة</span>
+                            <strong>12:00 PM</strong>
+                        </div>
+                        <div>
+                            <span>المكان</span>
+                            <strong>قاعة المؤتمرات</strong>
+                        </div>
+                    </div>
                 </div>
-                <div class="envelope-front"></div>
-                <div class="envelope-flap"></div>
-            </div>
+                <div class="ticket-date" aria-hidden="true">
+                    <strong>30</strong>
+                    <span>أغسطس</span>
+                    <small>2026</small>
+                </div>
+                <div class="ticket-code" aria-hidden="true"><span></span></div>
+            </section>
             <div class="mt-8 rounded-md border border-teal-100 bg-teal-50 p-5 text-center">
                 <p class="text-sm font-bold text-teal-800">السلام عليكم ورحمة الله وبركاته</p>
                 <p class="mt-3 leading-8 text-zinc-700">يسرّنا دعوتكم لمشاركتنا لحظة حصاد سنوات الدراسة والجهد، وحضور مناقشة مشروع تخرجنا.</p>

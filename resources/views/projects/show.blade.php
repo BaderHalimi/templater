@@ -1,3 +1,7 @@
+@php
+    $textTemplate = $project->invitationTextTemplate();
+@endphp
+
 <x-layouts.app :title="'دعوة '.$project->title">
     <div class="grid gap-8 lg:grid-cols-[1fr_360px]">
         <section class="rounded-md border border-zinc-200 bg-white p-4 shadow-sm sm:p-6">
@@ -10,29 +14,46 @@
             </div>
 
             <div class="web-invitation-preview">
-                <div class="preview-sparkline" aria-hidden="true"></div>
-                <div class="floating-envelope small" aria-hidden="true">
-                    <div class="envelope-back"></div>
-                    <div class="envelope-card">
-                        <span>دعوة رسمية</span>
-                        <strong>مناقشة مشروع</strong>
-                        <small>{{ $project->discussion_at->translatedFormat('l، d F Y') }}</small>
+                <section class="invitation-ticket" aria-label="ملخص موعد مناقشة المشروع">
+                    <div class="ticket-main">
+                        <p class="ticket-kicker">Graduation Project Defense</p>
+                        <div class="ticket-heading">
+                            <span>دعوة لحضور</span>
+                            <strong>مناقشة مشروع تخرج</strong>
+                        </div>
+                        <div class="ticket-facts">
+                            <div>
+                                <span>الساعة</span>
+                                <strong>{{ $project->discussion_at->translatedFormat('h:i A') }}</strong>
+                            </div>
+                            <div>
+                                <span>المكان</span>
+                                <strong>{{ $project->discussion_place }}</strong>
+                            </div>
+                        </div>
                     </div>
-                    <div class="envelope-front"></div>
-                    <div class="envelope-flap"></div>
-                </div>
+                    <div class="ticket-date" aria-hidden="true">
+                        <strong>{{ $project->discussion_at->translatedFormat('d') }}</strong>
+                        <span>{{ $project->discussion_at->translatedFormat('F') }}</span>
+                        <small>{{ $project->discussion_at->translatedFormat('Y') }}</small>
+                    </div>
+                    <div class="ticket-code" aria-hidden="true"><span></span></div>
+                </section>
 
                 <article class="invitation-paper">
-                    <p class="text-base font-bold text-teal-800">السلام عليكم ورحمة الله وبركاته،</p>
-                    <p>تحية طيبة وبعد،</p>
-                    <p>يسرّنا ويسعدنا دعوتكم لمشاركتنا لحظة حصاد سنوات الدراسة والجهد، وحضور مناقشة مشروع تخرجنا بعنوان:</p>
+                    <p class="text-base font-bold text-teal-800">{{ $textTemplate->greeting() }}</p>
+                    <p>{{ $textTemplate->intro() }}</p>
 
                     <h2>{{ $project->title }}</h2>
 
                     <div class="detail-grid">
                         <div>
-                            <span>فريق العمل</span>
-                            <strong>{{ implode('، ', $project->team_members) }}</strong>
+                            <span>أعضاء الفريق</span>
+                            <ul class="team-members">
+                                @foreach ($project->team_members as $member)
+                                    <li>{{ $member }}</li>
+                                @endforeach
+                            </ul>
                         </div>
                         @if ($project->supervisor)
                             <div>
@@ -58,8 +79,8 @@
                         <p>{{ $project->notes }}</p>
                     @endif
 
-                    <p>يسعدنا حضوركم وتشريفكم لنا في هذه المناسبة المميزة، فحضوركم يكتمل به فرحنا ويسعدنا جداً.</p>
-                    <p class="signature">دمتم بخير وود،<br>فريق المشروع</p>
+                    <p>{{ $textTemplate->closing() }}</p>
+                    <p class="signature">{{ $textTemplate->signOff() }}<br>فريق المشروع</p>
                 </article>
             </div>
         </section>

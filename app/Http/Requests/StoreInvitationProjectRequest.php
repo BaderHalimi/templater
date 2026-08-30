@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\InvitationTextTemplate;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class StoreInvitationProjectRequest extends FormRequest
 {
@@ -30,6 +32,7 @@ class StoreInvitationProjectRequest extends FormRequest
             'discussion_at' => ['required', 'date'],
             'discussion_place' => ['required', 'string', 'max:255'],
             'notes' => ['nullable', 'string', 'max:2000'],
+            'text_template' => ['required', Rule::in(InvitationTextTemplate::values())],
         ];
     }
 

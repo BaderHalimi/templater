@@ -1,86 +1,118 @@
+@php
+    $textTemplate = $project->invitationTextTemplate();
+@endphp
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no">
         <style>
-            @keyframes cardLift {
-                0% { transform: translateY(18px); opacity: 0.68; }
-                55% { transform: translateY(-8px); opacity: 1; }
-                100% { transform: translateY(0); opacity: 1; }
+            @media only screen and (max-width: 640px) {
+                .email-shell { width: 100% !important; }
+                .email-padding { padding-right: 20px !important; padding-left: 20px !important; }
+                .ticket-main { padding: 24px 20px !important; }
+                .ticket-date { width: 108px !important; }
+                .ticket-date-number { font-size: 40px !important; }
+                .detail-label, .detail-value { display: block !important; width: auto !important; }
+                .detail-value { padding-top: 0 !important; }
             }
-            body { margin: 0; background: #f7f4ef; color: #18181b; font-family: Arial, Tahoma, sans-serif; }
-            .wrap { width: 100%; padding: 28px 0; }
-            .shell { width: 92%; max-width: 680px; margin: 0 auto; background: #ffffff; border: 1px solid #ded8ce; border-radius: 8px; overflow: hidden; }
-            .hero { background: #0f766e; padding: 30px 24px; text-align: center; color: #ffffff; }
-            .envelope { position: relative; width: 190px; height: 118px; margin: 0 auto 24px; }
-            .card { position: absolute; left: 20px; right: 20px; top: -18px; background: #fffaf0; border-radius: 6px; padding: 18px 10px; color: #134e4a; box-shadow: 0 16px 28px rgba(15, 23, 42, 0.20); animation: cardLift 1.4s ease-out both; }
-            .front { position: absolute; inset: 35px 0 0; background: #f59e0b; border-radius: 0 0 8px 8px; }
-            .flap { position: absolute; left: 0; right: 0; top: 35px; height: 78px; background: #fbbf24; clip-path: polygon(0 0, 50% 62%, 100% 0, 100% 100%, 0 100%); }
-            h1 { margin: 0; font-size: 24px; line-height: 1.5; }
-            .content { padding: 30px 28px; font-size: 16px; line-height: 2; }
-            .title { margin: 24px 0; padding: 18px; border-right: 5px solid #0f766e; background: #f0fdfa; font-size: 22px; line-height: 1.55; font-weight: 800; color: #115e59; }
-            .details { margin: 22px 0; border-collapse: collapse; width: 100%; }
-            .details td { padding: 12px; border-bottom: 1px solid #e7e5e4; vertical-align: top; }
-            .label { width: 34%; color: #52525b; font-size: 13px; font-weight: 700; }
-            .value { color: #18181b; font-weight: 700; }
-            .footer { padding: 18px 28px 30px; color: #52525b; font-size: 14px; text-align: center; }
         </style>
     </head>
-    <body>
-        <div class="wrap">
-            <div class="shell">
-                <div class="hero">
-                    <div class="envelope" aria-hidden="true">
-                        <div class="card">دعوة مناقشة</div>
-                        <div class="front"></div>
-                        <div class="flap"></div>
-                    </div>
-                    <h1>دعوة لحضور مناقشة مشروع تخرج</h1>
-                </div>
-
-                <div class="content">
-                    <p>السلام عليكم ورحمة الله وبركاته،</p>
-                    <p>تحية طيبة وبعد،</p>
-                    <p>يسرّنا ويسعدنا دعوتكم لمشاركتنا لحظة حصاد سنوات الدراسة والجهد، وحضور مناقشة مشروع تخرجنا بعنوان:</p>
-
-                    <div class="title">{{ $project->title }}</div>
-
-                    <table class="details" role="presentation">
+    <body style="margin: 0; padding: 0; background-color: #edf4f1; color: #18181b; font-family: Tahoma, Arial, sans-serif;" dir="rtl">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width: 100%; border-collapse: collapse; background-color: #edf4f1;" dir="rtl">
+            <tr>
+                <td align="center" style="padding: 28px 12px;">
+                    <table role="presentation" class="email-shell" width="640" cellspacing="0" cellpadding="0" border="0" style="width: 640px; max-width: 640px; border-collapse: collapse; background-color: #ffffff; border: 1px solid #d9e5df;" dir="rtl">
                         <tr>
-                            <td class="label">فريق العمل</td>
-                            <td class="value">{{ implode('، ', $project->team_members) }}</td>
+                            <td style="padding: 0;">
+                                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width: 100%; border-collapse: collapse;" dir="rtl">
+                                    <tr>
+                                        <td class="ticket-main" valign="top" style="padding: 30px 32px; background-color: #173c39; color: #ffffff;">
+                                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse; margin: 0 0 26px;" dir="rtl">
+                                                <tr>
+                                                    <td valign="middle" style="padding-left: 10px;">
+                                                        <img src="{{ asset('logo/ucas_eng_club_web.png') }}" width="48" height="64" alt="شعار نادي UCAS الهندسي" style="display: block; width: 48px; height: 64px; border: 0; object-fit: contain;">
+                                                    </td>
+                                                    <td valign="middle" style="color: #a7d7c6; font-size: 11px; font-weight: 700; letter-spacing: 1px;">GRADUATION PROJECT DEFENSE</td>
+                                                </tr>
+                                            </table>
+                                            <p style="margin: 0 0 8px; color: #e3efea; font-size: 14px; font-weight: 700;">دعوة لحضور</p>
+                                            <h1 style="margin: 0; color: #ffffff; font-size: 27px; line-height: 1.4; font-weight: 800;">مناقشة مشروع تخرج</h1>
+                                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width: 100%; border-collapse: collapse; margin-top: 28px;" dir="rtl">
+                                                <tr>
+                                                    <td valign="top" style="padding-left: 20px;">
+                                                        <p style="margin: 0 0 5px; color: #a7d7c6; font-size: 11px; font-weight: 700;">الساعة</p>
+                                                        <p style="margin: 0; color: #ffffff; font-size: 14px; font-weight: 700;">{{ $project->discussion_at->translatedFormat('h:i A') }}</p>
+                                                    </td>
+                                                    <td valign="top">
+                                                        <p style="margin: 0 0 5px; color: #a7d7c6; font-size: 11px; font-weight: 700;">المكان</p>
+                                                        <p style="margin: 0; color: #ffffff; font-size: 14px; line-height: 1.6; font-weight: 700;">{{ $project->discussion_place }}</p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td class="ticket-date" width="142" align="center" valign="middle" style="width: 142px; padding: 22px 10px; background-color: #f3eee4; border-right: 1px dashed #8bc9b5; color: #173c39;">
+                                            <p class="ticket-date-number" style="margin: 0; color: #173c39; font-size: 50px; line-height: 1; font-weight: 800;">{{ $project->discussion_at->translatedFormat('d') }}</p>
+                                            <p style="margin: 8px 0 4px; color: #173c39; font-size: 14px; font-weight: 800;">{{ $project->discussion_at->translatedFormat('F') }}</p>
+                                            <p style="margin: 0; color: #5f756f; font-size: 12px; font-weight: 700;">{{ $project->discussion_at->translatedFormat('Y') }}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
-                        @if ($project->supervisor)
-                            <tr>
-                                <td class="label">تحت إشراف</td>
-                                <td class="value">{{ $project->supervisor }}</td>
-                            </tr>
-                        @endif
+
                         <tr>
-                            <td class="label">اليوم والتاريخ</td>
-                            <td class="value">{{ $project->discussion_at->translatedFormat('l، d F Y') }}</td>
+                            <td class="email-padding" style="padding: 34px 38px 12px;">
+                                <p style="margin: 0; color: #0f766e; font-size: 17px; line-height: 1.8; font-weight: 800;">{{ $textTemplate->greeting() }}</p>
+                                <p style="margin: 18px 0 0; color: #3f3f46; font-size: 16px; line-height: 2;">{{ $textTemplate->intro() }}</p>
+
+                                <div style="margin: 24px 0; padding: 19px 20px; background-color: #f0fdfa; border-right: 5px solid #0f766e; color: #115e59; font-size: 24px; line-height: 1.55; font-weight: 800; word-break: break-word;">{{ $project->title }}</div>
+
+                                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width: 100%; border-collapse: collapse; border: 1px solid #e2e8e5;" dir="rtl">
+                                    <tr>
+                                        <td class="detail-label" width="155" valign="top" style="width: 155px; padding: 15px; border-bottom: 1px solid #e2e8e5; color: #5f756f; font-size: 13px; font-weight: 700;">أعضاء الفريق</td>
+                                        <td class="detail-value" valign="top" style="padding: 15px; border-bottom: 1px solid #e2e8e5; color: #18181b; font-size: 15px; line-height: 1.9; font-weight: 700;">
+                                            @foreach ($project->team_members as $member)
+                                                <div style="margin: 0 0 4px;">{{ $loop->iteration }}. {{ $member }}</div>
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                    @if ($project->supervisor)
+                                        <tr>
+                                            <td class="detail-label" width="155" valign="top" style="width: 155px; padding: 15px; border-bottom: 1px solid #e2e8e5; color: #5f756f; font-size: 13px; font-weight: 700;">تحت إشراف</td>
+                                            <td class="detail-value" valign="top" style="padding: 15px; border-bottom: 1px solid #e2e8e5; color: #18181b; font-size: 15px; line-height: 1.8; font-weight: 700;">{{ $project->supervisor }}</td>
+                                        </tr>
+                                    @endif
+                                    <tr>
+                                        <td class="detail-label" width="155" valign="top" style="width: 155px; padding: 15px; border-bottom: 1px solid #e2e8e5; color: #5f756f; font-size: 13px; font-weight: 700;">اليوم والتاريخ</td>
+                                        <td class="detail-value" valign="top" style="padding: 15px; border-bottom: 1px solid #e2e8e5; color: #18181b; font-size: 15px; line-height: 1.8; font-weight: 700;">{{ $project->discussion_at->translatedFormat('l، d F Y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="detail-label" width="155" valign="top" style="width: 155px; padding: 15px; border-bottom: 1px solid #e2e8e5; color: #5f756f; font-size: 13px; font-weight: 700;">التوقيت</td>
+                                        <td class="detail-value" valign="top" style="padding: 15px; border-bottom: 1px solid #e2e8e5; color: #18181b; font-size: 15px; line-height: 1.8; font-weight: 700;">{{ $project->discussion_at->translatedFormat('h:i A') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="detail-label" width="155" valign="top" style="width: 155px; padding: 15px; color: #5f756f; font-size: 13px; font-weight: 700;">المكان</td>
+                                        <td class="detail-value" valign="top" style="padding: 15px; color: #18181b; font-size: 15px; line-height: 1.8; font-weight: 700;">{{ $project->discussion_place }}</td>
+                                    </tr>
+                                </table>
+
+                                @if ($project->notes)
+                                    <p style="margin: 24px 0 0; color: #3f3f46; font-size: 16px; line-height: 2;">{{ $project->notes }}</p>
+                                @endif
+
+                                <p style="margin: 25px 0 0; color: #3f3f46; font-size: 16px; line-height: 2;">{{ $textTemplate->closing() }}</p>
+                                <p style="margin: 18px 0 0; color: #0f766e; font-size: 16px; line-height: 1.9; font-weight: 800;">{{ $textTemplate->signOff() }}<br>فريق المشروع</p>
+                            </td>
                         </tr>
                         <tr>
-                            <td class="label">التوقيت</td>
-                            <td class="value">{{ $project->discussion_at->translatedFormat('h:i A') }}</td>
-                        </tr>
-                        <tr>
-                            <td class="label">المكان</td>
-                            <td class="value">{{ $project->discussion_place }}</td>
+                            <td align="center" style="padding: 24px 28px 30px; color: #71817c; font-size: 12px; line-height: 1.8;">دعوة مشروع تخرج تم إعدادها عبر <a href="{{ config('app.url') }}" style="color: #0f766e; font-weight: 800; text-decoration: none;">{{ config('app.name') }}</a></td>
                         </tr>
                     </table>
-
-                    @if ($project->notes)
-                        <p>{{ $project->notes }}</p>
-                    @endif
-
-                    <p>يسعدنا حضوركم وتشريفكم لنا في هذه المناسبة المميزة، فحضوركم يكتمل به فرحنا ويسعدنا جداً.</p>
-                    <p>دمتم بخير وود،<br>فريق المشروع</p>
-                </div>
-
-                <div class="footer">تم إرسال هذه الدعوة عبر Templater</div>
-            </div>
-        </div>
+                </td>
+            </tr>
+        </table>
     </body>
 </html>
