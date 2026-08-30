@@ -25,6 +25,18 @@ it('redirects users to Google with a university domain hint', function (): void 
     expect(session('google_oauth_state'))->not->toBeEmpty();
 });
 
+it('keeps users on the login page when Google is not configured', function (): void {
+    config([
+        'services.google.client_id' => null,
+        'services.google.client_secret' => null,
+        'services.google.redirect' => null,
+    ]);
+
+    $this->get(route('auth.google.redirect'))
+        ->assertRedirect(route('login'))
+        ->assertSessionHas('authError', 'تسجيل الدخول عبر Google غير مُعدّ بعد. تواصل مع مسؤول النظام.');
+});
+
 it('creates and signs in a user with a verified university email', function (): void {
     Http::preventStrayRequests();
     Http::fake([

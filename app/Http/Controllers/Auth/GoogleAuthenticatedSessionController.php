@@ -19,6 +19,10 @@ class GoogleAuthenticatedSessionController extends Controller
 
     public function redirect(Request $request): RedirectResponse
     {
+        if (! $this->googleIsConfigured()) {
+            return $this->authenticationFailed('تسجيل الدخول عبر Google غير مُعدّ بعد. تواصل مع مسؤول النظام.');
+        }
+
         $state = Str::random(40);
 
         $request->session()->put('google_oauth_state', $state);
@@ -108,6 +112,13 @@ class GoogleAuthenticatedSessionController extends Controller
     private function hasAllowedEmailDomain(string $email): bool
     {
         return Str::endsWith($email, self::AllowedEmailDomains);
+    }
+
+    private function googleIsConfigured(): bool
+    {
+        return filled(config('services.google.client_id'))
+            && filled(config('services.google.client_secret'))
+            && filled(config('services.google.redirect'));
     }
 
     private function authenticationFailed(string $message): RedirectResponse
