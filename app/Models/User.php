@@ -12,6 +12,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
 /**
  * @property int $id
@@ -19,13 +21,14 @@ use Illuminate\Support\Str;
  * @property string $email
  * @property Carbon|null $email_verified_at
  * @property string $password
+ * @property bool $is_admin
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'is_admin'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -40,7 +43,16 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
         ];
+    }
+
+    /**
+     * Determine whether the user is allowed to access the Filament panel.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->is_admin === true;
     }
 
     /**
@@ -61,5 +73,13 @@ class User extends Authenticatable
     public function invitationProjects(): HasMany
     {
         return $this->hasMany(InvitationProject::class);
+    }
+
+    /**
+     * @return HasMany<InvitationSend, $this>
+     */
+    public function invitationSends(): HasMany
+    {
+        return $this->hasMany(InvitationSend::class);
     }
 }

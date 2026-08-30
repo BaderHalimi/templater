@@ -83,6 +83,27 @@ it('rejects invalid invitation recipients without sending mail', function (): vo
     Mail::assertNothingSent();
 });
 
+it('records an invitation send row for every recipient', function (): void {
+    Mail::fake();
+    $user = User::factory()->create();
+    $project = InvitationProject::factory()->for($user)->create();
+
+    Livewire::actingAs($user)
+        ->test(ProjectShow::class, ['project' => $project])
+        ->set('emails', "a@example.com\nb@example.com")
+        ->call('send')
+        ->assertHasNoErrors();
+
+    expect($project->invitationSends()->count())->toBe(2);
+    expect($project->invitationSends()->pluck('recipient_email')->all())
+        ->toBe(['a@example.com', 'b@example.com']);
+    $this->assertDatabaseHas('invitation_sends', [
+        'user_id' => $user->id,
+        'invitation_project_id' => $project->id,
+        'recipient_email' => 'a@example.com',
+    ]);
+});
+
 it('renders the project details inside the html invitation mail', function (): void {
     $project = InvitationProject::factory()->create([
         'title' => 'AI-Based Classification of Web Server Logs',

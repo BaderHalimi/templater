@@ -56,6 +56,12 @@ class ProjectShow extends Component
 
         foreach ($recipients as $recipient) {
             Mail::to($recipient)->send(new ProjectInvitationMail($this->project));
+
+            $this->project->invitationSends()->create([
+                'user_id' => $this->project->user_id,
+                'recipient_email' => $recipient,
+                'sent_at' => now(),
+            ]);
         }
 
         $this->emails = '';

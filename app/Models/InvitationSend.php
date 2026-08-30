@@ -13,8 +13,10 @@ use Illuminate\Support\Carbon;
  * @property int $invitation_project_id
  * @property string $recipient_email
  * @property Carbon $sent_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  */
-#[Fillable(['user_id', 'recipient_email', 'sent_at'])]
+#[Fillable(['user_id', 'invitation_project_id', 'recipient_email', 'sent_at'])]
 class InvitationSend extends Model
 {
     /**
