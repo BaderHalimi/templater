@@ -24,7 +24,7 @@
         <div class="invite-stage min-h-[520px] rounded-md border border-zinc-200 bg-white p-6 shadow-sm">
             <section class="invitation-ticket welcome-ticket" aria-label="مثال على دعوة مناقشة مشروع">
                 <div class="ticket-main">
-                    <p class="ticket-kicker">Graduation Project Defense</p>
+                    <p class="ticket-kicker" style="line-height: 1.7; letter-spacing: 0; text-transform: none;" dir="rtl">النــــــــادي الهنـــــــدسي<br><span class="text-[0.68rem] font-semibold">مساحة للابداع والتميز</span></p>
                     <div class="ticket-heading">
                         <span>دعوة لحضور</span>
                         <strong>مناقشة مشروع تخرج</strong>

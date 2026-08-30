@@ -16,7 +16,7 @@
             <div class="web-invitation-preview">
                 <section class="invitation-ticket" aria-label="ملخص موعد مناقشة المشروع">
                     <div class="ticket-main">
-                        <p class="ticket-kicker">Graduation Project Defense</p>
+                        <p class="ticket-kicker" style="line-height: 1.7; letter-spacing: 0; text-transform: none;" dir="rtl">النــــــــادي الهنـــــــدسي<br><span class="text-[0.68rem] font-semibold">مساحة للابداع والتميز</span></p>
                         <div class="ticket-heading">
                             <span>دعوة لحضور</span>
                             <strong>مناقشة مشروع تخرج</strong>

@@ -27,7 +27,7 @@
                     <div class="flex items-center gap-2">
                         <img src="{{ asset('logo/ucas_eng_club_web.png') }}" alt="شعار نادي UCAS الهندسي"
                             class="h-16 w-12 object-contain sm:h-16 sm:w-12">
-                        <p class="ticket-kicker">Graduation Project Defense</p>
+                        <p class="ticket-kicker" style="line-height: 1.7; letter-spacing: 0; text-transform: none;" dir="rtl">النــــــــادي الهنـــــــدسي<br><span class="text-[0.68rem] font-semibold">مساحة للابداع والتميز</span></p>
                     </div>
                     <div class="ticket-heading">
                         <span>دعوة لحضور</span>

@@ -51,7 +51,7 @@
                                                     <td valign="middle" style="padding-left: 10px;">
                                                         <img src="{{ asset('logo/ucas_eng_club_web.png') }}" width="48" height="64" alt="شعار نادي UCAS الهندسي" class="ticket-logo" style="display: block; width: 48px; height: 64px; border: 0; object-fit: contain;">
                                                     </td>
-                                                    <td class="ticket-kicker" valign="middle" style="color: #a7d7c6; font-size: 11px; font-weight: 700; letter-spacing: 1px;">GRADUATION PROJECT DEFENSE</td>
+                                                    <td class="ticket-kicker" valign="middle" style="color: #a7d7c6; font-size: 11px; line-height: 1.7; font-weight: 700; letter-spacing: 0;" dir="rtl">النــــــــادي الهنـــــــدسي<br><span style="font-size: 10px; font-weight: 600;">مساحة للابداع والتميز</span></td>
                                                 </tr>
                                             </table>
                                             <p class="ticket-pretitle" style="margin: 0 0 8px; color: #e3efea; font-size: 14px; font-weight: 700;">دعوة لحضور</p>
